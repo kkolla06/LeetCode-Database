@@ -4,11 +4,13 @@ CREATE TABLE Member
  password VARCHAR2(50),
  PRIMARY KEY (username),
  UNIQUE (email));
+
 CREATE TABLE PremiumMember
 (username VARCHAR2(50),
  creditCardNum VARCHAR2(16) NOT NULL,
  PRIMARY KEY (username),
  FOREIGN KEY (username) REFERENCES Member(username));
+
 CREATE TABLE Problem
 (problemNum INTEGER,
  title VARCHAR2(120),
@@ -16,18 +18,21 @@ CREATE TABLE Problem
  difficulty VARCHAR2(6),
  PRIMARY KEY (problemNum),
  UNIQUE (title));
+
 CREATE TABLE Solution1
 (problemNum INTEGER,
  approachNum INTEGER,
  title VARCHAR2(120),
  PRIMARY KEY (problemNum, approachNum),
  FOREIGN KEY (problemNum) REFERENCES Problem(problemNum));
+
 CREATE TABLE Solution2
 (problemNum INTEGER,
  lang VARCHAR2(10),
  approachNum INTEGER,
  PRIMARY KEY (problemNum, lang, approachNum),
  FOREIGN KEY (problemNum) REFERENCES Problem(problemNum));
+
 CREATE TABLE Discussion
 (discussionID INTEGER,
  submissionTime TIMESTAMP,
@@ -39,10 +44,12 @@ CREATE TABLE Discussion
  UNIQUE (memberUsername, submissionTime),
  FOREIGN KEY (memberUsername) REFERENCES Member(username),
  FOREIGN KEY (problemNum) REFERENCES Problem(problemNum));
+
 CREATE TABLE Submission1
 (runtime FLOAT,
  status VARCHAR2(8),
  PRIMARY KEY (runtime));
+
 CREATE TABLE Submission2
 (submissionID INTEGER,
  lang VARCHAR2(10),
@@ -56,28 +63,34 @@ CREATE TABLE Submission2
  UNIQUE (username, timeSubmitted),
  FOREIGN KEY (problemNum) REFERENCES Problem(problemNum),
  FOREIGN KEY (username) REFERENCES Member(username));
+
 CREATE TABLE Contest
 ("NUMBER" INTEGER,
  status VARCHAR2(9),
  PRIMARY KEY("NUMBER"));
+
 CREATE TABLE Company
 (name VARCHAR2(50),
  PRIMARY KEY(name));
+
 CREATE TABLE Topic
 (name VARCHAR2(50),
  PRIMARY KEY(name));
+
 CREATE TABLE CompanyCategorizedProblems
 (problemNum INTEGER,
  companyName VARCHAR2(50),
  PRIMARY KEY(problemNum, companyName),
  FOREIGN KEY(problemNum) REFERENCES Problem(problemNum),
  FOREIGN KEY(companyName) REFERENCES Company(name));
+
 CREATE TABLE TopicTaggedProblems
 (problemNum INTEGER,
  topicName VARCHAR2(50),
  PRIMARY KEY(problemNum, topicName),
  FOREIGN KEY(problemNum) REFERENCES Problem(problemNum),
  FOREIGN KEY(topicName) REFERENCES Topic(name));
+
 CREATE TABLE MemberParticipatesInContest
 (username VARCHAR2(50),
  contestNumber INTEGER,
@@ -86,6 +99,7 @@ CREATE TABLE MemberParticipatesInContest
  PRIMARY KEY(username, contestNumber),
  FOREIGN KEY(username) REFERENCES Member(username),
  FOREIGN KEY(contestNumber) REFERENCES Contest("NUMBER"));
+
 
 INSERT INTO Member(username, email, password)
 VALUES ('tylershaw', 'tylershaw1999@gmail.com', 'Tsshaw10!10@');
@@ -107,6 +121,7 @@ INSERT INTO Member(username, email, password)
 VALUES ('lalisablink', 'lalisarocks@gmail.com', 'BlackPinkinyourarea<3!');
 INSERT INTO Member(username, email, password)
 VALUES ('starboy', 'theweeknd@gmail.com', 'darkKnight2018$');
+
 INSERT INTO PremiumMember(username,creditCardNum)
 VALUES ('arianagrande', '1111222233334444');
 INSERT INTO PremiumMember(username,creditCardNum)
@@ -117,6 +132,7 @@ INSERT INTO PremiumMember(username,creditCardNum)
 VALUES ('swiftyswiftxpxp', '5151707022228866');
 INSERT INTO PremiumMember(username,creditCardNum)
 VALUES ('samsmith67', '5151707022228866');
+
 INSERT INTO Problem(problemNum, title, acceptance, difficulty)
 VALUES (1, 'Two Sum', 49.5, 'Easy');
 INSERT INTO Problem(problemNum, title, acceptance, difficulty)
@@ -129,6 +145,7 @@ INSERT INTO Problem(problemNum, title, acceptance, difficulty)
 VALUES (5, 'Longest Palindromic Substring', 32.4, 'Medium');
 INSERT INTO Problem(problemNum, title, acceptance, difficulty)
 VALUES (6, 'Zigzag Conversion', 44.7, 'Medium');
+
 INSERT INTO Solution1(problemNum, approachNum, title)
 VALUES (1, 1, 'Two Sum BruteForce');
 INSERT INTO Solution1(problemNum, approachNum, title)
@@ -151,6 +168,7 @@ INSERT INTO Solution1(problemNum, approachNum, title)
 VALUES (6, 1, 'Zigzag Conversion Simulate Zigzag Movement');
 INSERT INTO Solution1(problemNum, approachNum, title)
 VALUES (6, 2, 'Zigzag Conversion String Traversal');
+
 INSERT INTO Solution2(problemNum, lang, approachNum)
 VALUES (1, 'Java', 1);
 INSERT INTO Solution2(problemNum, lang, approachNum)
@@ -199,6 +217,7 @@ INSERT INTO Solution2(problemNum, lang, approachNum)
 VALUES (6, 'Python3', 1);
 INSERT INTO Solution2(problemNum, lang, approachNum)
 VALUES (6, 'Python3', 2);
+
 INSERT INTO Discussion(discussionID, submissionTime, upvotes, viewsNum,
                        memberUsername, problemNum)
 VALUES (1, '2020-01-01 12:01:39', 200, 784, 'tylershaw',1);
@@ -217,6 +236,7 @@ VALUES (5, '2022-07-18 09:11:27', 397, 111, 'smileyMiley',5);
 INSERT INTO Discussion(discussionID, submissionTime, upvotes, viewsNum,
                        memberUsername, problemNum)
 VALUES (6, '2022-07-19 11:11:41', 600, 1392, 'smileyMiley',6);
+
 INSERT INTO Submission1(runtime, status)
 VALUES (1.5, 'accepted');
 INSERT INTO Submission1(runtime, status)
@@ -227,6 +247,7 @@ INSERT INTO Submission1(runtime, status)
 VALUES (0.2, 'accepted');
 INSERT INTO Submission1(runtime, status)
 VALUES (0.5, 'accepted');
+
 INSERT INTO Submission2(submissionID, lang, runtime, memory, problemNum, username,
                         timeSubmitted)
 VALUES (1, 'Java', 1.5, 39, 1, 'baebeyonce711', '2022-01-03 02:37:39');
@@ -245,6 +266,7 @@ VALUES (5, 'Java', 0.5, 49, 6, 'starboy', '2021-12-31 20:47:08' );
 INSERT INTO Submission2(submissionID, lang, runtime, memory, problemNum, username,
                         timeSubmitted)
 VALUES (6, 'Python3', -1, -1, 3, 'swiftyswiftxpxp', '2021-09-21 21:30:08');
+
 INSERT INTO Contest("NUMBER", status)
 VALUES (1, 'ended');
 INSERT INTO Contest("NUMBER", status)
@@ -257,6 +279,7 @@ INSERT INTO Contest("NUMBER", status)
 VALUES (5, 'open');
 INSERT INTO Contest("NUMBER", status)
 VALUES (6, 'open');
+
 INSERT INTO Company(name)
 VALUES ('Microsoft');
 INSERT INTO Company(name)
@@ -269,6 +292,7 @@ INSERT INTO Company(name)
 VALUES ('Bloomberg');
 INSERT INTO Company(name)
 VALUES ('Apple');
+
 INSERT INTO Topic(name)
 VALUES ('Dynamic Programming');
 INSERT INTO Topic(name)
@@ -279,6 +303,7 @@ INSERT INTO Topic(name)
 VALUES ('Strings');
 INSERT INTO Topic(name)
 VALUES ('Sorting');
+
 INSERT INTO CompanyCategorizedProblems(problemNum, companyName )
 VALUES (1, 'Microsoft');
 INSERT INTO CompanyCategorizedProblems(problemNum, companyName )
@@ -301,6 +326,7 @@ INSERT INTO CompanyCategorizedProblems(problemNum, companyName )
 VALUES (5, 'Google');
 INSERT INTO CompanyCategorizedProblems(problemNum, companyName )
 VALUES (6, 'Tiktok');
+
 INSERT INTO TopicTaggedProblems(problemNum, topicName)
 VALUES (1, 'Dynamic Programming');
 INSERT INTO TopicTaggedProblems(problemNum, topicName)
@@ -319,6 +345,7 @@ INSERT INTO TopicTaggedProblems(problemNum, topicName)
 VALUES (5, 'Strings');
 INSERT INTO TopicTaggedProblems(problemNum, topicName)
 VALUES (6, 'Arrays');
+
 INSERT INTO MemberParticipatesInContest(username, contestNumber, finishTime, score)
 VALUES ('ririrocks2023', 2, '2023-01-31 20:47:08', '79');
 INSERT INTO MemberParticipatesInContest(username, contestNumber, finishTime, score)
